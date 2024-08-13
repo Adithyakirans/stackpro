@@ -14,7 +14,7 @@ class Questions(models.Model):
         return self.title
 
 
-class Answer(models.Model):
+class Answers(models.Model):
     user = models.ForeignKey(User,on_delete=models.CASCADE)
     question = models.ForeignKey(Questions,on_delete=models.CASCADE)
     answer = models.CharField(max_length=250)
