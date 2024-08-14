@@ -12,6 +12,10 @@ class Questions(models.Model):
 
     def __str__(self):
         return self.title
+    
+    @property
+    def question_answer(self):
+        return self.answers_set.all()
 
 
 class Answers(models.Model):
