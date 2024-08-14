@@ -1,9 +1,10 @@
 from django.shortcuts import render
 from rest_framework.response import Response
 from rest_framework import viewsets
-from .serializers import UserSerializer,QuestionSerializer
+from .serializers import UserSerializer,QuestionSerializer,AnswerSerializer
 from .models import Questions,Answers
 from rest_framework import authentication,permissions
+from rest_framework.decorators import action
 
 
 
@@ -45,6 +46,19 @@ class QuestionView(viewsets.ModelViewSet):
     # OR override built in get_queryset function
     def get_queryset(self):
         return Questions.objects.all().exclude(user=self.request.user)
+    
+    @action(methods=['POST'],detail=True)
+    def add_answer(self,request,*args,**kwargs):
+        # get object we want to add answer to
+        object = self.get_object()
+        serializer = AnswerSerializer(data=request.data)
+        if serializer.is_valid():
+            serializer.save(user=request.user,question=object)
+            return Response(data=serializer.data)
+        else:
+            return Response(data=serializer.errors)
+        
+
         
 
 

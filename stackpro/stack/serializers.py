@@ -19,3 +19,14 @@ class QuestionSerializer(serializers.ModelSerializer):
     class Meta:
         model = Questions
         fields = '__all__'
+
+class AnswerSerializer(serializers.ModelSerializer):
+    id = serializers.CharField(read_only=True)
+    user = serializers.CharField(read_only=True)
+    question = serializers.CharField(read_only=True)
+    upvote = serializers.CharField(read_only=True)
+
+    class Meta:
+        model = Answers
+        fields = '__all__'
+        
