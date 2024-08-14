@@ -10,3 +10,12 @@ class UserSerializer(serializers.ModelSerializer):
 
     def create(self, validated_data):
         return User.objects.create_user(**validated_data)
+    
+
+class QuestionSerializer(serializers.ModelSerializer):
+    user = serializers.CharField(read_only=True)
+    date = serializers.CharField(read_only=True)
+
+    class Meta:
+        model = Questions
+        fields = '__all__'
