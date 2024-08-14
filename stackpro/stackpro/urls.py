@@ -22,6 +22,8 @@ from rest_framework.authtoken.views import ObtainAuthToken
 router = DefaultRouter()
 router.register("user",views.Userview,basename="user"),
 router.register("questions",views.QuestionView,basename="questions"),
+router.register("answer",views.AnswerView,basename="answer")
+
 urlpatterns = [
     path('admin/', admin.site.urls),
     path("token",ObtainAuthToken.as_view())

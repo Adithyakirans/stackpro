@@ -5,6 +5,7 @@ from .serializers import UserSerializer,QuestionSerializer,AnswerSerializer
 from .models import Questions,Answers
 from rest_framework import authentication,permissions
 from rest_framework.decorators import action
+from rest_framework import serializers
 
 
 
@@ -60,7 +61,33 @@ class QuestionView(viewsets.ModelViewSet):
         
 # create view for answers
         
+class AnswerView(viewsets.ModelViewSet):
+    serializer_class = AnswerSerializer
+    queryset = Answers.objects.all()
+
+    # we can override both create and listing method because we've already added it inside questions
+
+    def create(self,request,*args,**kwargs):
+        raise serializers.ValidationError('method not found')
+    
+    def list(self,request,*args,**kwargs):
+        raise serializers.ValidationError('method not found')
+    
+    authentication_classes = [authentication.TokenAuthentication]
+    permission_classes = [permissions.IsAuthenticated]
+
+    # override destroy method so only author can delete their answer
+    def destroy(self, request, *args, **kwargs):
+        # get data of current user
+        object = self.get_object()
+        if request.user == object.user:
+            object.delete()
+            return Response(data='deleted')
+        else:
+            raise serializers.ValidationError('permission denied')
         
+
+
 
         
 
