@@ -19,6 +19,7 @@ class AnswerSerializer(serializers.ModelSerializer):
     user = serializers.CharField(read_only=True)
     question = serializers.CharField(read_only=True)
     upvote = serializers.CharField(read_only=True)
+    upvote_count = serializers.CharField(read_only=True)
 
     class Meta:
         model = Answers

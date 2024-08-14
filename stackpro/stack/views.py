@@ -86,6 +86,15 @@ class AnswerView(viewsets.ModelViewSet):
         else:
             raise serializers.ValidationError('permission denied')
         
+    # creating custom method for adding upvotes
+    @action(methods=['POST'],detail=True)
+    def add_upvote(self,request,*args,**kwargs):
+        # get object we want to add upvote to
+        answer = self.get_object()
+        user = request.user
+        # get which user upvoted for which answer
+        answer.upvote.add(user)
+        return Response(data='upvote added')
 
 
 

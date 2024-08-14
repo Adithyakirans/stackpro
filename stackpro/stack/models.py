@@ -26,3 +26,8 @@ class Answers(models.Model):
     
     def __str__(self):
         return self.answer
+    
+    # upvote count
+    @property
+    def upvote_count(self):
+        return self.upvote.all().count()
