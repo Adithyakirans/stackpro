@@ -1,1 +1,3 @@
-content
+test/practice  project 
+where you can add questions and answers about technical errors...
+upvote functions added
