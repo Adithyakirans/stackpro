@@ -35,5 +35,17 @@ class QuestionView(viewsets.ModelViewSet):
             return Response(data=serializer.data)
         else:
             return Response(data=serializer.errors)
+        
+    #     # function to list out question excluding current user's(overriding list funtion)
+    # def list(self, request, *args, **kwargs):
+    #     queryset = Questions.objects.all().exclude(user=request.user)
+    #     serializer = QuestionSerializer(queryset,many=True)
+    #     return Response(data=serializer.data)
+    
+    # OR override built in get_queryset function
+    def get_queryset(self):
+        return Questions.objects.all().exclude(user=self.request.user)
+        
+
 
 
